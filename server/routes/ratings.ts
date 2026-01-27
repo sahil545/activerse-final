@@ -250,15 +250,15 @@ export const handleDeleteRating: RequestHandler = async (req, res) => {
         message: "Authentication required",
       });
     }
-WithTimeout(`${LARAVEL_API_URL}/ratings/${ratingId}`, {
+
+    const response = await fetchWithTimeout(`${LARAVEL_API_URL}/ratings/${ratingId}`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      timeout: 10000 Authorization: `Bearer ${token}`,
-      },
+      timeout: 10000,
     });
 
     if (!response.ok) {
