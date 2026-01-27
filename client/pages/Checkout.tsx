@@ -594,24 +594,44 @@ export default function Checkout() {
                       );
 
                       let orderResult;
-                      try {
-                        const responseText = await response.text();
-                        console.log("Order API response:", responseText);
+                      const responseText = await response.text();
+                      console.log("Order API response:", responseText);
 
+                      if (!response.ok) {
+                        // Try to extract error message from HTML or JSON
+                        let errorMessage = `Failed to create order (${response.status})`;
+                        
+                        try {
+                          // Try parsing as JSON first
+                          orderResult = JSON.parse(responseText);
+                          errorMessage = orderResult.message || orderResult.error || errorMessage;
+                        } catch (e) {
+                          // If not JSON, try extracting from HTML
+                          if (responseText.includes("<!DOCTYPE")) {
+                            // Extract error message from Laravel HTML error page
+                            const messageMatch = responseText.match(/<h1[^>]*>([^<]+)<\/h1>/);
+                            const detailMatch = responseText.match(/Exception<\/a>:\s*([^<]+)</);
+                            
+                            if (detailMatch && detailMatch[1]) {
+                              errorMessage = detailMatch[1].trim();
+                            } else if (messageMatch && messageMatch[1]) {
+                              errorMessage = messageMatch[1].trim();
+                            }
+                          }
+                        }
+                        
+                        throw new Error(errorMessage);
+                      }
+
+                      // Only try to parse as JSON if response is OK
+                      try {
                         if (!responseText) {
                           throw new Error("Empty response from order API");
                         }
-
                         orderResult = JSON.parse(responseText);
                       } catch (parseError) {
                         throw new Error(
                           `Failed to parse order response: ${parseError instanceof Error ? parseError.message : "Unknown error"}`,
-                        );
-                      }
-
-                      if (!response.ok) {
-                        throw new Error(
-                          orderResult.message || `Failed to create order (${response.status})`,
                         );
                       }
 
