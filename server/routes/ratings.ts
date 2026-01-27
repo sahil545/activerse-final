@@ -210,14 +210,14 @@ export const handleCreateOrUpdateRating: RequestHandler = async (req, res) => {
         message: "Either authentication token or guest email/name is required",
       });
     }
-WithTimeout(
+
+    const response = await fetchWithTimeout(
       `${LARAVEL_API_URL}/products/${productId}/ratings`,
       {
         method: "POST",
         headers,
         body: JSON.stringify(body),
-        timeout: 10000
-        body: JSON.stringify(body),
+        timeout: 10000,
       }
     );
 
