@@ -32,9 +32,6 @@ export default function Header() {
                 </svg>
               </div>
               <div className="text-center md:text-left">
-                <p className="font-jakarta font-bold text-white text-xs md:text-sm leading-tight">
-                  Free Shipping on Orders $50+
-                </p>
                 <p className="font-jakarta text-orange-300 text-[10px] md:text-xs font-semibold hidden sm:block">
                   Limited Time Offer
                 </p>
