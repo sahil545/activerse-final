@@ -74,7 +74,7 @@ export default function Checkout() {
     0,
   );
   const shippingCost = subtotal > 50 ? 0 : 5;
-  const taxAmount = subtotal * 0.05;
+  const taxAmount = subtotal * 0.07;
   const total = subtotal + shippingCost + taxAmount;
 
   if (cart.length === 0 && !orderPlaced) {
@@ -840,7 +840,7 @@ export default function Checkout() {
                   })}</span>
                 </div>
                 <div className="flex justify-between text-gray-600">
-                  <span>Tax (5%)</span>
+                  <span>Tax (7%)</span>
                   <span>${taxAmount.toLocaleString("en-US", {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2,
