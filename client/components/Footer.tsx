@@ -37,7 +37,6 @@ export default function Footer() {
                   "Our Blog",
                   "Start a Return",
                   "Contact Us",
-                  "Shipping FAQ",
                 ].map((item) => (
                   <li key={item}>
                     <Link
@@ -59,10 +58,8 @@ export default function Footer() {
               <ul className="space-y-5">
                 {[
                   "My Account",
-                  "Print Provider",
-                  "Become a Partner",
-                  "Custom Products",
-                  "Make your own shirt",
+                  "Become a Vendor",
+                  "Shipping FAQ",
                 ].map((item) => (
                   <li key={item}>
                     <Link
@@ -104,9 +101,10 @@ export default function Footer() {
 
             {/* Social Media Links */}
               <div>
-                <p className="font-jakarta font-medium text-[14px] leading-[20px] text-[#7E7E7E] mb-4">
-                  Follow us
-                </p>
+                <h3 className="font-jakarta font-bold text-[20px] leading-[28px] mb-4">
+               Follow us
+              </h3>
+                
                 <div className="flex gap-4">
                   <a
                     href="https://www.facebook.com/people/The-Activerse/100083580720051/"
