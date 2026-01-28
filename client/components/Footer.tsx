@@ -57,21 +57,33 @@ export default function Footer() {
                 Useful links
               </h3>
               <ul className="space-y-5">
-                {[
-                  "My Account",
-                  "Become a Vendor",
-                  "Shipping FAQ",
-                ].map((item) => (
-                  <li key={item}>
-                    <Link
-                      to="/"
-                      className="font-jakarta font-medium text-[16px] leading-[29px] text-[#7E7E7E] hover:text-black transition"
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+  {[
+    { label: "My Account", path: "/" },
+    { label: "Become a Vendor", path: "https://admin.theactiverse.com/register", external: true },
+    { label: "Shipping FAQ", path: "/shipping-faq" },
+  ].map((item) => (
+    <li key={item.label}>
+      {item.external ? (
+        <a
+          href={item.path}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-jakarta font-medium text-[16px] leading-[29px] text-[#7E7E7E] hover:text-black transition"
+        >
+          {item.label}
+        </a>
+      ) : (
+        <Link
+          to={item.path}
+          className="font-jakarta font-medium text-[16px] leading-[29px] text-[#7E7E7E] hover:text-black transition"
+        >
+          {item.label}
+        </Link>
+      )}
+    </li>
+  ))}
+</ul>
+
             </div>
 
             
