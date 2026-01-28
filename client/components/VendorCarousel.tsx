@@ -126,7 +126,7 @@ export default function VendorCarousel() {
                             </div>
 
                             {/* CTA - Visible on Hover */}
-                            <button className="mt-3 w-full py-2 rounded-lg bg-blue-600 text-white font-jakarta font-semibold text-xs hover:bg-blue-700 transition-colors opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+                            <button className="mt-3 w-full py-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white font-jakarta font-semibold text-xs group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 ">
                               View Shop
                             </button>
                           </div>
