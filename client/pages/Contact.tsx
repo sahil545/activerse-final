@@ -233,7 +233,7 @@ export default function Contact() {
                       Phone
                     </h3>
                     <p className="font-jakarta font-medium text-[16px] text-[#7E7E7E]">
-                      561-281-2091
+                      800#
                     </p>
                    
                   </div>

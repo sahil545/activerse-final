@@ -20,7 +20,7 @@ export default function Footer() {
                   info@ytheactiverse.com
                 </p>
                 <p className="font-jakarta font-bold text-[18px]">
-                  561-281-2091
+                  800#
                 </p>
                 
               </div>
