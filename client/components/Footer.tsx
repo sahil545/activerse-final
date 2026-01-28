@@ -99,7 +99,10 @@ export default function Footer() {
                 </button>
               </div>
 
-              {/* Social Media Links */}
+              
+            </div>
+
+            {/* Social Media Links */}
               <div>
                 <p className="font-jakarta font-medium text-[14px] leading-[20px] text-[#7E7E7E] mb-4">
                   Follow us
@@ -140,7 +143,6 @@ export default function Footer() {
                   </a>
                 </div>
               </div>
-            </div>
           </div>
         </div>
       </div>
