@@ -61,7 +61,7 @@ export interface Product {
 
 export async function getVendors(): Promise<Vendor[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/vendors`, {
+    const response = await fetch(`${API_BASE_URL}/users`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
