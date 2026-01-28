@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const slides = [
   {
@@ -64,10 +65,13 @@ export default function HeroSlider() {
                 <span className="font-bold">{slide.titleBold}</span>
               </h1>
 
-              <button className="flex items-center gap-3 bg-black text-white px-6 sm:px-8 py-4 sm:py-5 rounded-[17px] font-bold text-[18px] sm:text-[23px] hover:bg-gray-900 transition">
-                Shop Now
-                <ArrowRight className="w-6 h-6" />
-              </button>
+              <Link
+  to="/shop"
+  className="flex items-center gap-3 bg-black text-white px-6 sm:px-8 py-4 sm:py-5 rounded-[17px] font-bold text-[18px] sm:text-[23px] hover:bg-gray-900 transition"
+>
+  Shop Now
+  <ArrowRight className="w-6 h-6" />
+</Link>
             </div>
           </div>
         </div>
