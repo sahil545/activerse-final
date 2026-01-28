@@ -40,12 +40,15 @@ export default function Header() {
             </div>
 
             {/* Center - CTA Button */}
-            <button className="inline-flex items-center justify-center gap-1.5 px-4 md:px-6 py-2 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-jakarta font-bold text-xs md:text-sm hover:shadow-lg hover:shadow-orange-500/50 hover:scale-105 transition-all duration-300">
-              <span>Shop Now</span>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
+            <Link
+  to="/shop"
+  className="inline-flex items-center justify-center gap-1.5 px-4 md:px-6 py-2 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-jakarta font-bold text-xs md:text-sm hover:shadow-lg hover:shadow-orange-500/50 hover:scale-105 transition-all duration-300"
+>
+  <span>Shop Now</span>
+  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+  </svg>
+</Link>
 
             {/* Right - Close Button */}
             {/*<button className="ml-auto md:ml-0 text-slate-400 hover:text-white transition-colors duration-300 p-1">
