@@ -60,7 +60,7 @@ export default function Footer() {
   {[
     { label: "My Account", path: "/" },
     { label: "Become a Vendor", path: "https://admin.theactiverse.com/register", external: true },
-    { label: "Shipping FAQ", path: "/" },
+    { label: "Shipping FAQ", path: "/shipping-faq" },
   ].map((item) => (
     <li key={item.label}>
       {item.external ? (
