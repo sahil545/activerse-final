@@ -44,26 +44,7 @@ export default function ReturnPolicy() {
             </ul>
           </section>
 
-          <section>
-            <h2 className="text-2xl font-jakarta font-bold mb-4">
-              How to Initiate a Return
-            </h2>
-            <ol className="list-decimal list-inside space-y-2 font-jakarta text-[16px] text-[#7E7E7E]">
-              <li>Log into your account on The Activerse website</li>
-              <li>
-                Navigate to "My Orders" and select the order containing the item
-                to return
-              </li>
-              <li>
-                Click "Start a Return" and select the item(s) you wish to return
-              </li>
-              <li>Choose your reason for return</li>
-              <li>Print the prepaid return shipping label</li>
-              <li>
-                Pack your item securely and use the provided shipping label
-              </li>
-            </ol>
-          </section>
+          
 
           <section>
             <h2 className="text-2xl font-jakarta font-bold mb-4">
