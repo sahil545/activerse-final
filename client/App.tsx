@@ -53,6 +53,8 @@ const AppRoutes = () => (
       <Route path="/features" element={<Features />} />
       <Route path="/blogs" element={<Blogs />} />
       <Route path="/blog/:slug" element={<Blog />} />
+      <Route path="/return-policy" element={<ReturnPolicy />} />
+      <Route path="/shipping-faq" element={<ShippingFAQ />} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>
