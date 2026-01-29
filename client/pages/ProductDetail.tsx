@@ -160,13 +160,13 @@ export default function ProductDetail() {
 
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Back Button */}
-        <Link
-          to={vendor ? `/vendor/${vendor.id}` : "/"}
-          className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-700 mb-8"
+        <button
+          onClick={() => navigate(-1)}
+          className="inline-flex items-center gap-2 text-blue-500 hover:text-blue-700 mb-8 bg-none border-none cursor-pointer"
         >
           <ChevronLeft className="w-5 h-5" />
-          Backk
-        </Link>
+          Back
+        </button>
 
         {/* Product Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
