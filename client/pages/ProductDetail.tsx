@@ -26,7 +26,6 @@ export default function ProductDetail() {
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<string>("");
-  const [selectedGender, setSelectedGender] = useState<string>("");
   const { addToCart } = useCart();
 
   useEffect(() => {
@@ -76,13 +75,6 @@ export default function ProductDetail() {
       return;
     }
 
-    if (!selectedGender) {
-      toast.error("Please select a gender", {
-        description: "Gender selection is required for this product",
-      });
-      return;
-    }
-
     addToCart({
       product_id: product.product_id,
       product_name: product.product_name,
@@ -91,13 +83,11 @@ export default function ProductDetail() {
       product_thumbnail: product.product_thumbnail,
       selectedColor: selectedColor || undefined,
       selectedSize: selectedSize || undefined,
-      selectedGender: selectedGender || undefined,
     });
 
     let description = `Quantity: ${quantity}`;
     if (selectedColor) description += `, Color: ${selectedColor}`;
     if (selectedSize) description += `, Size: ${selectedSize}`;
-    if (selectedGender) description += `, Gender: ${selectedGender}`;
 
     toast.success(`${product.product_name} added to cart!`, {
       description,
@@ -106,7 +96,6 @@ export default function ProductDetail() {
     setQuantity(1);
     setSelectedColor("");
     setSelectedSize("");
-    setSelectedGender("");
   };
 
   const handleQuantityChange = (change: number) => {
@@ -297,27 +286,7 @@ export default function ProductDetail() {
               </div>
             )}
 
-            {/* Gender Selection */}
-            <div className="mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                Select Gender
-              </h3>
-              <div className="flex gap-3">
-                {["Men", "Women"].map((gender) => (
-                  <button
-                    key={gender}
-                    onClick={() => setSelectedGender(gender)}
-                    className={`px-6 py-2 rounded-lg border-2 font-semibold transition-colors ${
-                      selectedGender === gender
-                        ? "border-[#070418] bg-[#070418] text-white"
-                        : "border-gray-300 bg-white text-gray-900 hover:border-gray-400"
-                    }`}
-                  >
-                    {gender}
-                  </button>
-                ))}
-              </div>
-            </div>
+
 
             {/* Quantity Selector & Add to Cart */}
             {product.product_quantity > 0 && (

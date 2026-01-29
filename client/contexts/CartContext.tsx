@@ -8,7 +8,6 @@ export interface CartItem {
   product_thumbnail: string;
   selectedColor?: string;
   selectedSize?: string;
-  selectedGender?: string;
 }
 
 interface CartContextType {
@@ -52,15 +51,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
         (c) =>
           c.product_id === item.product_id &&
           c.selectedColor === item.selectedColor &&
-          c.selectedSize === item.selectedSize &&
-          c.selectedGender === item.selectedGender,
+          c.selectedSize === item.selectedSize,
       );
       if (existing) {
         return prevCart.map((c) =>
           c.product_id === item.product_id &&
           c.selectedColor === item.selectedColor &&
-          c.selectedSize === item.selectedSize &&
-          c.selectedGender === item.selectedGender
+          c.selectedSize === item.selectedSize
             ? { ...c, quantity: c.quantity + item.quantity }
             : c,
         );

@@ -248,16 +248,7 @@ export default function Checkout() {
                                 </p>
                               </div>
                             )}
-                            {item.selectedGender && (
-                              <div>
-                                <p className="font-jakarta text-[13px] text-[#7E7E7E]">
-                                  Gender
-                                </p>
-                                <p className="font-jakarta font-bold text-[16px]">
-                                  {item.selectedGender}
-                                </p>
-                              </div>
-                            )}
+
                             <div>
                               <p className="font-jakarta text-[13px] text-[#7E7E7E]">
                                 Total
