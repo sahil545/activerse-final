@@ -85,13 +85,17 @@ export default function ShippingFAQ() {
         </Accordion>
 
         <div className="mt-16 p-8 bg-[#F5F5F5] rounded-lg">
-          <h2 className="text-2xl font-jakarta font-bold mb-4">Still need help?</h2>
+          <h2 className="text-2xl font-jakarta font-bold mb-4">
+            Still need help?
+          </h2>
           <p className="font-jakarta text-[16px] text-[#7E7E7E] mb-6">
-            If you can't find the answer you're looking for, please don't hesitate to contact our customer service team.
+            If you can't find the answer you're looking for, please don't
+            hesitate to contact our customer service team.
           </p>
           <div className="space-y-2">
             <p className="font-jakarta text-[16px] text-[#7E7E7E]">
-              <span className="font-semibold">Email:</span> info@theactiverse.com
+              <span className="font-semibold">Email:</span>{" "}
+              info@theactiverse.com
             </p>
             <p className="font-jakarta text-[16px] text-[#7E7E7E]">
               <span className="font-semibold">Phone:</span> 800#
