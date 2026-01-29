@@ -19,6 +19,7 @@ import { toast } from "sonner";
 
 export default function ProductDetail() {
   const { product_id } = useParams<{ product_id: string }>();
+  const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [vendor, setVendor] = useState<Vendor | null>(null);
   const [loading, setLoading] = useState(true);
