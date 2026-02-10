@@ -8,16 +8,24 @@ import { ArrowLeft, Check } from "lucide-react";
 import { getProductImageUrl } from "@/lib/api";
 import StripePaymentForm from "@/components/StripePaymentForm";
 import { toast } from "sonner";
- 
+
 interface CheckoutFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  address: string;
-  city: string;
-  state: string;
-  postalCode: string;
+  billingFirstName: string;
+  billingLastName: string;
+  billingEmail: string;
+  billingPhone: string;
+  billingAddress: string;
+  billingCity: string;
+  billingState: string;
+  billingPostalCode: string;
+  shippingFirstName: string;
+  shippingLastName: string;
+  shippingEmail: string;
+  shippingPhone: string;
+  shippingAddress: string;
+  shippingCity: string;
+  shippingState: string;
+  shippingPostalCode: string;
   cardNumber: string;
   expiryDate: string;
   cvv: string;
@@ -39,15 +47,24 @@ export default function Checkout() {
   const navigate = useNavigate();
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderData, setOrderData] = useState<OrderData | null>(null);
+  const [shippingSameAsBilling, setShippingSameAsBilling] = useState(false);
   const [formData, setFormData] = useState<CheckoutFormData>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    state: "",
-    postalCode: "",
+    billingFirstName: "",
+    billingLastName: "",
+    billingEmail: "",
+    billingPhone: "",
+    billingAddress: "",
+    billingCity: "",
+    billingState: "",
+    billingPostalCode: "",
+    shippingFirstName: "",
+    shippingLastName: "",
+    shippingEmail: "",
+    shippingPhone: "",
+    shippingAddress: "",
+    shippingCity: "",
+    shippingState: "",
+    shippingPostalCode: "",
     cardNumber: "",
     expiryDate: "",
     cvv: "",
@@ -62,9 +79,11 @@ export default function Checkout() {
 
       setFormData((prev) => ({
         ...prev,
-        firstName,
-        lastName,
-        email: user.email || "",
+        billingFirstName: firstName,
+        billingLastName: lastName,
+        billingEmail: user.email || "",
+        shippingFirstName: firstName,
+        shippingLastName: lastName,
       }));
     }
   }, [user]);
@@ -73,7 +92,7 @@ export default function Checkout() {
     (sum, item) => sum + item.product_price * item.quantity,
     0,
   );
-  const shippingCost = subtotal > 50 ? 0 : 5;
+  const shippingCost = 5;
   const taxAmount = subtotal * 0.07;
   const total = subtotal + shippingCost + taxAmount;
 
@@ -166,20 +185,20 @@ export default function Checkout() {
                   <div className="space-y-2 text-[15px] font-jakarta">
                     <p>
                       <span className="font-semibold">
-                        {formData.firstName} {formData.lastName}
+                        {formData.billingFirstName} {formData.billingLastName}
                       </span>
                     </p>
-                    <p>{formData.address}</p>
+                    <p>{formData.billingAddress}</p>
                     <p>
-                      {formData.city}, {formData.state} {formData.postalCode}
+                      {formData.billingCity}, {formData.billingState} {formData.billingPostalCode}
                     </p>
                     <p className="pt-2">
                       <span className="font-semibold">Email:</span>{" "}
-                      {formData.email}
+                      {formData.billingEmail}
                     </p>
                     <p>
                       <span className="font-semibold">Phone:</span>{" "}
-                      {formData.phone}
+                      {formData.billingPhone}
                     </p>
                   </div>
                 </div>
@@ -334,7 +353,7 @@ export default function Checkout() {
                   📧 Next Steps
                 </h3>
                 <ul className="space-y-2 font-jakarta text-[14px] text-[#7E7E7E]">
-                  <li>✓ A confirmation email has been sent to {formData.email}</li>
+                  <li>✓ A confirmation email has been sent to {formData.billingEmail}</li>
                   <li>✓ Your order will be processed and shipped within 2-3 business days</li>
                   <li>✓ You'll receive tracking information via email once shipped</li>
                 </ul>
@@ -375,21 +394,29 @@ export default function Checkout() {
     e.preventDefault();
 
     if (
-      !formData.firstName ||
-      !formData.lastName ||
-      !formData.email ||
-      !formData.phone ||
-      !formData.address ||
-      !formData.city ||
-      !formData.state ||
-      !formData.postalCode
+      !formData.billingFirstName ||
+      !formData.billingLastName ||
+      !formData.billingEmail ||
+      !formData.billingPhone ||
+      !formData.billingAddress ||
+      !formData.billingCity ||
+      !formData.billingState ||
+      !formData.billingPostalCode ||
+      !formData.shippingFirstName ||
+      !formData.shippingLastName ||
+      !formData.shippingEmail ||
+      !formData.shippingPhone ||
+      !formData.shippingAddress ||
+      !formData.shippingCity ||
+      !formData.shippingState ||
+      !formData.shippingPostalCode
     ) {
-      alert("Please fill in all address fields");
+      alert("Please fill in all billing and shipping address fields");
       return;
     }
 
     // Payment will be handled by the Stripe payment form
-    // Just validate shipping address is complete
+    // Just validate both addresses are complete
   };
 
   return (
@@ -412,6 +439,135 @@ export default function Checkout() {
           {/* Checkout Form */}
           <div className="lg:col-span-2">
             <div className="space-y-8">
+              {/* Billing Address Section */}
+              <div className="bg-white rounded-lg border border-gray-200 p-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                  Billing Address
+                </h2>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                  <input
+                    type="text"
+                    name="billingFirstName"
+                    placeholder="First Name"
+                    value={formData.billingFirstName}
+                    onChange={handleInputChange}
+                    disabled={!!user}
+                    className={`px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 ${
+                      user ? "bg-gray-100 cursor-not-allowed opacity-70" : ""
+                    }`}
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="billingLastName"
+                    placeholder="Last Name"
+                    value={formData.billingLastName}
+                    onChange={handleInputChange}
+                    disabled={!!user}
+                    className={`px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 ${
+                      user ? "bg-gray-100 cursor-not-allowed opacity-70" : ""
+                    }`}
+                    required
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                  <input
+                    type="email"
+                    name="billingEmail"
+                    placeholder="Email Address"
+                    value={formData.billingEmail}
+                    onChange={handleInputChange}
+                    disabled={!!user}
+                    className={`px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 ${
+                      user ? "bg-gray-100 cursor-not-allowed opacity-70" : ""
+                    }`}
+                    required
+                  />
+                  <input
+                    type="tel"
+                    name="billingPhone"
+                    placeholder="Phone Number"
+                    value={formData.billingPhone}
+                    onChange={handleInputChange}
+                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    required
+                  />
+                </div>
+
+                <input
+                  type="text"
+                  name="billingAddress"
+                  placeholder="Street Address"
+                  value={formData.billingAddress}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 mb-4"
+                  required
+                />
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <input
+                    type="text"
+                    name="billingCity"
+                    placeholder="City"
+                    value={formData.billingCity}
+                    onChange={handleInputChange}
+                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="billingState"
+                    placeholder="State/Province"
+                    value={formData.billingState}
+                    onChange={handleInputChange}
+                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="billingPostalCode"
+                    placeholder="Postal Code"
+                    value={formData.billingPostalCode}
+                    onChange={handleInputChange}
+                    className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* Checkbox: Shipping Same as Billing */}
+              <div className="bg-blue-50 rounded-lg border border-blue-200 p-6">
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={shippingSameAsBilling}
+                    onChange={(e) => {
+                      const isChecked = e.target.checked;
+                      setShippingSameAsBilling(isChecked);
+                      if (isChecked) {
+                        setFormData((prev) => ({
+                          ...prev,
+                          shippingFirstName: prev.billingFirstName,
+                          shippingLastName: prev.billingLastName,
+                          shippingEmail: prev.billingEmail,
+                          shippingPhone: prev.billingPhone,
+                          shippingAddress: prev.billingAddress,
+                          shippingCity: prev.billingCity,
+                          shippingState: prev.billingState,
+                          shippingPostalCode: prev.billingPostalCode,
+                        }));
+                      }
+                    }}
+                    className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                  />
+                  <span className="text-gray-700 font-medium">
+                    Shipping address same as billing address
+                  </span>
+                </label>
+              </div>
+
               {/* Shipping Address Section */}
               <div className="bg-white rounded-lg border border-gray-200 p-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-6">
@@ -421,18 +577,18 @@ export default function Checkout() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                   <input
                     type="text"
-                    name="firstName"
+                    name="shippingFirstName"
                     placeholder="First Name"
-                    value={formData.firstName}
+                    value={formData.shippingFirstName}
                     onChange={handleInputChange}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                     required
                   />
                   <input
                     type="text"
-                    name="lastName"
+                    name="shippingLastName"
                     placeholder="Last Name"
-                    value={formData.lastName}
+                    value={formData.shippingLastName}
                     onChange={handleInputChange}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                     required
@@ -442,18 +598,18 @@ export default function Checkout() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                   <input
                     type="email"
-                    name="email"
+                    name="shippingEmail"
                     placeholder="Email Address"
-                    value={formData.email}
+                    value={formData.shippingEmail}
                     onChange={handleInputChange}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                     required
                   />
                   <input
                     type="tel"
-                    name="phone"
+                    name="shippingPhone"
                     placeholder="Phone Number"
-                    value={formData.phone}
+                    value={formData.shippingPhone}
                     onChange={handleInputChange}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                     required
@@ -462,9 +618,9 @@ export default function Checkout() {
 
                 <input
                   type="text"
-                  name="address"
+                  name="shippingAddress"
                   placeholder="Street Address"
-                  value={formData.address}
+                  value={formData.shippingAddress}
                   onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 mb-4"
                   required
@@ -473,27 +629,27 @@ export default function Checkout() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <input
                     type="text"
-                    name="city"
+                    name="shippingCity"
                     placeholder="City"
-                    value={formData.city}
+                    value={formData.shippingCity}
                     onChange={handleInputChange}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                     required
                   />
                   <input
                     type="text"
-                    name="state"
+                    name="shippingState"
                     placeholder="State/Province"
-                    value={formData.state}
+                    value={formData.shippingState}
                     onChange={handleInputChange}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                     required
                   />
                   <input
                     type="text"
-                    name="postalCode"
+                    name="shippingPostalCode"
                     placeholder="Postal Code"
-                    value={formData.postalCode}
+                    value={formData.shippingPostalCode}
                     onChange={handleInputChange}
                     className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                     required
@@ -511,17 +667,25 @@ export default function Checkout() {
                   amount={total}
                   onSubmit={(e) => {
                     if (
-                      !formData.firstName ||
-                      !formData.lastName ||
-                      !formData.email ||
-                      !formData.phone ||
-                      !formData.address ||
-                      !formData.city ||
-                      !formData.state ||
-                      !formData.postalCode
+                      !formData.billingFirstName ||
+                      !formData.billingLastName ||
+                      !formData.billingEmail ||
+                      !formData.billingPhone ||
+                      !formData.billingAddress ||
+                      !formData.billingCity ||
+                      !formData.billingState ||
+                      !formData.billingPostalCode ||
+                      !formData.shippingFirstName ||
+                      !formData.shippingLastName ||
+                      !formData.shippingEmail ||
+                      !formData.shippingPhone ||
+                      !formData.shippingAddress ||
+                      !formData.shippingCity ||
+                      !formData.shippingState ||
+                      !formData.shippingPostalCode
                     ) {
                       toast.error(
-                        "Please fill in all shipping information first",
+                        "Please fill in all billing and shipping information first",
                       );
                       return false;
                     }
@@ -538,15 +702,26 @@ export default function Checkout() {
 
                       // Prepare order data
                       const orderData = {
-                        customer_email: formData.email,
-                        customer_phone: formData.phone,
-                        shipping_first_name: formData.firstName,
-                        shipping_last_name: formData.lastName,
-                        shipping_address: formData.address,
-                        shipping_city: formData.city,
-                        shipping_state: formData.state,
-                        shipping_postal_code: formData.postalCode,
-                        shipping_country: "US",
+                        customer_email: formData.billingEmail,
+                        customer_phone: formData.billingPhone,
+                        billing_first_name: formData.billingFirstName,
+                        billing_last_name: formData.billingLastName,
+                        billing_email: formData.billingEmail,
+                        billing_phone: formData.billingPhone,
+                        billing_address: formData.billingAddress,
+                        billing_city: formData.billingCity,
+                        billing_state: formData.billingState,
+                        billing_postal_code: formData.billingPostalCode,
+                        billing_country: "IN",
+                        shipping_first_name: formData.shippingFirstName,
+                        shipping_last_name: formData.shippingLastName,
+                        shipping_email: formData.shippingEmail,
+                        shipping_phone: formData.shippingPhone,
+                        shipping_address: formData.shippingAddress,
+                        shipping_city: formData.shippingCity,
+                        shipping_state: formData.shippingState,
+                        shipping_postal_code: formData.shippingPostalCode,
+                        shipping_country: "IN",
                         subtotal: subtotal,
                         tax_amount: taxAmount,
                         shipping_cost: shippingCost,

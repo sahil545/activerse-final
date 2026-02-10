@@ -12,14 +12,14 @@ export default function FeaturesSection() {
     {
       icon: RotateCcw,
       title: "Easy Returns",
-      description: "Hassle-free returns within 30 days. No questions asked. Full refunds or exchanges available.",
+      description: "Hassle-free returns within 10 days. No questions asked. Full refunds or exchanges available.",
       stat: "10",
       statLabel: "Day Return",
     },
     {
       icon: Headphones,
       title: "Online Support",
-      description: "24/7 customer support via chat, email, and phone. Our team is always ready to help.",
+      description: "561-281-2091",
       stat: "24/7",
       statLabel: "Support",
     },

@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { getCategories, Category } from "../lib/api";
 import { ArrowRight, Zap } from "lucide-react";
 
+// 👉 CHANGE THESE IDS WHENEVER YOU WANT
+const TOP_CATEGORY_IDS = [6, 15, 16, 12];
+
 export default function CategorySection() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -13,11 +16,20 @@ export default function CategorySection() {
       try {
         setLoading(true);
         setError(null);
+
         const data = await getCategories();
-        setCategories(data.slice(0, 4));
+
+        // ✅ FILTER USING category_id (API FIELD)
+        const filteredCategories = TOP_CATEGORY_IDS
+          .map((id) =>
+            data.find((category) => category.category_id === id)
+          )
+          .filter(Boolean) as Category[];
+
+        setCategories(filteredCategories);
       } catch (err) {
         setError(
-          err instanceof Error ? err.message : "Failed to fetch categories",
+          err instanceof Error ? err.message : "Failed to fetch categories"
         );
         setCategories([]);
       } finally {
@@ -39,6 +51,7 @@ export default function CategorySection() {
               Browse Collections
             </span>
           </div>
+
           <div className="relative inline-block">
             <h2 className="font-almarai font-bold text-4xl sm:text-5xl md:text-6xl leading-tight text-slate-900">
               Top Categories
@@ -57,21 +70,25 @@ export default function CategorySection() {
               />
             </svg>
           </div>
+
           <p className="font-jakarta text-lg text-slate-600 max-w-2xl mx-auto mt-8">
             Explore our premium selection of athletic gear and sportswear across all categories
           </p>
         </div>
 
-        {/* Categories Grid */}
+        {/* Loading */}
         {loading && (
           <div className="flex justify-center py-16">
             <div className="text-center">
               <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-slate-200 border-t-orange-500 mb-4"></div>
-              <p className="font-jakarta text-slate-600">Loading categories...</p>
+              <p className="font-jakarta text-slate-600">
+                Loading categories...
+              </p>
             </div>
           </div>
         )}
-        
+
+        {/* Error */}
         {error && (
           <div className="flex justify-center py-16">
             <p className="font-jakarta text-red-600 bg-red-50 px-6 py-4 rounded-lg">
@@ -79,7 +96,8 @@ export default function CategorySection() {
             </p>
           </div>
         )}
-        
+
+        {/* No Categories */}
         {!loading && !error && categories.length === 0 && (
           <div className="flex justify-center py-16">
             <p className="font-jakarta text-slate-600 bg-slate-100 px-6 py-4 rounded-lg">
@@ -87,14 +105,15 @@ export default function CategorySection() {
             </p>
           </div>
         )}
-        
+
+        {/* Categories Grid */}
         {!loading && !error && categories.length > 0 && (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {categories.map((category, index) => (
                 <Link
-                  to={`/category/${category.category_id || category.id}`}
-                  key={category.id || category.category_slug || index}
+                  to={`/category/${category.category_id}`}
+                  key={category.category_id ?? index}
                   className="group relative cursor-pointer overflow-hidden rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-300 border border-slate-100 hover:border-orange-200"
                 >
                   <div className="relative w-full aspect-square bg-gradient-to-br from-slate-200 to-slate-300 overflow-hidden">
@@ -105,24 +124,23 @@ export default function CategorySection() {
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                     )}
-                    
+
                     {/* Gradient Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent opacity-60 group-hover:opacity-75 transition-opacity duration-300"></div>
 
-                    {/* Badge - Top Left */}
+                    {/* Badge */}
                     <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg">
                       <span className="font-jakarta font-bold text-xs text-slate-900 uppercase tracking-wide">
                         Shop Now
                       </span>
                     </div>
 
-                    {/* Content - Bottom */}
+                    {/* Content */}
                     <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-center">
                       <h3 className="font-almarai font-bold text-white text-2xl md:text-3xl lg:text-4xl leading-tight mb-4">
                         {category.category_name}
                       </h3>
-                      
-                      {/* CTA Arrow - Visible on Hover */}
+
                       <div className="flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300">
                         <span className="font-jakarta font-semibold text-white text-sm">
                           Explore

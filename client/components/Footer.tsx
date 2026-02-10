@@ -33,9 +33,9 @@ export default function Footer() {
                 />
                 <div className="space-y-3">
                   <p className="font-jakarta font-medium text-[16px] text-[#7E7E7E]">
-                    info@ytheactiverse.com
+                    info@theactiverse.com
                   </p>
-                  <p className="font-jakarta font-bold text-[18px]">800#</p>
+                  <p className="font-jakarta font-bold text-[18px]">561-281-2091</p>
                 </div>
               </div>
 

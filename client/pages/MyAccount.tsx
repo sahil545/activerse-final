@@ -272,7 +272,7 @@ export default function MyAccount() {
                 <>
                   {/* Orders Table */}
                   <div className="overflow-x-auto">
-                    <table className="w-full">
+                    <table className="w-full" style={{ width: "800px" }}>
                       <thead className="bg-slate-50">
                         <tr>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-slate-900">
@@ -282,7 +282,7 @@ export default function MyAccount() {
                             Date
                           </th>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-slate-900">
-                            Items
+                            Shipping Address
                           </th>
                           <th className="px-6 py-4 text-left text-sm font-semibold text-slate-900">
                             Total

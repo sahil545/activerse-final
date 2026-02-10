@@ -263,7 +263,7 @@ export default function Contact() {
                       Email
                     </h3>
                     <p className="font-jakarta font-medium text-[16px] text-[#7E7E7E]">
-                      info@ytheactiverse.com
+                      info@theactiverse.com
                     </p>
                     
                   </div>
@@ -281,7 +281,7 @@ export default function Contact() {
                       Phone
                     </h3>
                     <p className="font-jakarta font-medium text-[16px] text-[#7E7E7E]">
-                      800#
+                      561-281-2091
                     </p>
                    
                   </div>

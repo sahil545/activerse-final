@@ -96,9 +96,6 @@ export default function Shop() {
       );
     }
 
-    // Note: Rating filter is included but would require additional API data
-    // For now, we'll keep the structure but note that ratings aren't in the current API response
-
     setFilteredProducts(filtered);
   };
 
